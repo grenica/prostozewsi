@@ -1,0 +1,19 @@
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+.sidebar {
+    background-color: #7bc066;
+    flex-basis: 12rem;
+}
+.app_page {
+    flex: 1 1 100%;
+    flex-direction: column;
+}
+.guzik {
+    color:$colorguzik !important;
+}
+
+ul {
+    list-style: none;
+}

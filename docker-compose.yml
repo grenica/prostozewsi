@@ -1,0 +1,87 @@
+version: '3.5'
+
+networks:
+    laravel:
+
+services: 
+    apache:
+        container_name: ${DB_DATABASE}_server
+        #image: php:7.2-apache
+        build:
+            context: '.'
+            # args:
+            #   uid: ${UID}
+        # environment:
+        #     - APACHE_RUN_USER=#${UID}
+        #     - APACHE_RUN_GROUP=#${UID}
+        ports:
+            - "80:80"
+        volumes: 
+            - .:/var/www/html
+        depends_on:
+            # -php
+            - mysql
+            - elasticsearch
+        networks:
+            - laravel
+    mysql:
+        image: mysql:5.7
+        container_name: ${DB_DATABASE}_mysql
+        restart: unless-stopped
+        tty: true        
+        ports:
+            - "3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        networks:
+            - laravel
+    # php:
+    #     build: 
+    #         context: .
+    #         dockerfile: Dockerfile
+    #     container_name: php_laravel
+    #     volumes:
+    #         -./src:/var/www/html
+    #     ports:
+    #         -"9000:9000"
+    #     networks:
+    #         -laravel
+
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+        container_name: es
+        environment:
+            # - node.name=es01
+            # - cluster.name=es-docker-cluster
+            # - discovery.seed_hosts=es02,es03
+            # - cluster.initial_master_nodes=es01
+            # - bootstrap.memory_lock=true
+            # - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+            - discovery.type=single-node
+        ulimits:
+            memlock:
+              soft: -1
+              hard: -1
+        # volumes:
+        #     - data01:/var/lib/elasticsearch/data
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        networks:
+            - laravel
+    # wizualizator do elasticsearch
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.5.2
+        ports:
+            - "5601:5601"
+        links:
+            - elasticsearch
+        networks:
+            - laravel
