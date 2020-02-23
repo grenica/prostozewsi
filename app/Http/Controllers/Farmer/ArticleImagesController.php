@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Article;
 use app\Articleimage;
-use Image;
-//use Intervention\Image\ImageManagerStatic as Image;
+//use Image;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ArticleImagesController extends Controller
 {
