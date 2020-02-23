@@ -1,8 +1,4 @@
-@extends('layouts.back')
-
-@section('starter')
-  Kategorie JM
-@endsection
+@extends('layouts.farmer')
 
 @section('content')
 

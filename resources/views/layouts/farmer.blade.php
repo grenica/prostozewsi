@@ -32,7 +32,7 @@
             <li><h4>Panel rolnika</h4>
                 <ul>
                     <li><a href="{{ url('/zamow')}}">Zamówienia</a></li>
-                    <li><a href="#">Moje towary</a></li>
+                <li><a href="{{ route('farmer.article.index')}}">Moje towary</a></li>
                     <li><a href="#">Historia</a></li>
                 <li><a href="{{ route('farmer.market.index')}}">Rynki</a></li>
                 </ul>

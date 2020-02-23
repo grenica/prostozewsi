@@ -48,6 +48,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('/payment', 'Farmer\PaymentController',['as'=>'farmer']);
             Route::resource('/market', 'Farmer\MarketController',['as'=>'farmer']);
             Route::resource('/article', 'Farmer\ArticleController',['as'=>'farmer']);
+         //   Route::resource('/artimages/{idarticle}', 'Farmer\ArticleImagesController',['as'=>'farmer']);
+           Route::get('/artimages/{id}/create','Farmer\ArticleImagesController@create')->name('farmer.artimages.create');
+           Route::post('/artimages','Farmer\ArticleImagesController@store')->name('farmer.artimages.store');
+           Route::delete('/artimages/{id}','Farmer\ArticleImagesController@destroy')->name('farmer.artimages.destroy');
         // });
     });
 

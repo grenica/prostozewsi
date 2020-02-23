@@ -1,4 +1,4 @@
-@extends('layouts.back')
+@extends('layouts.farmer')
 
 @section('content')
 <div class="container">
@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    {!! Form::open(array('route'=>'farmer.article.store')) !!}
+                    {!! Form::open(array('route'=>'farmer.article.store','files'=>'true')) !!}
                         @include('farmer.article._form')
                         {{-- {!! Form::hidden('plan_id', $plan->id ) !!} --}}
                         <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Zapisz</button>

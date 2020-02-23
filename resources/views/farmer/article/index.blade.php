@@ -1,4 +1,4 @@
-@extends('layouts.back')
+@extends('layouts.farmer')
 
 @section('content')
 <div class="container">
@@ -20,7 +20,7 @@
             <a class="btn guzik" data-toggle="modal">
                 <i class="icofont-plus-circle icofont-2x"></i>
             </a>
-            @if ($plans->isEmpty())
+            @if ($myarticles->isEmpty())
                 <div class="alert alert-danger" role="alert">
                     Brak rekordów !!!
                 </div>
@@ -33,15 +33,15 @@
                            </tr>
                         </thead>
                         <tbody>
-                            @foreach ($plans as $plan)
+                            @foreach ($myarticles as $myarticle)
                                 <tr>
-                                <td>{{$plan->id }}</td>
-                                <td>{{$plan->name }}</td>
+                                <td>{{$myarticle->id }}</td>
+                                <td><a href="{{ route('farmer.article.show',$myarticle->id)}}">{{$myarticle->name }}</a> </td>
                                 <td>
                                     <div class="float-right">
                                         
-                                <a class="btn btn-outline-info edit" data-id="{{ $plan->id }}"><i class="icofont-ui-edit"></i></a>                               
-                                {!! Form::model($plan,array('route'=>['admin.plan.destroy',$plan],'method'=>'DELETE','class'=>'d-inline')) !!}
+                                <a class="btn btn-outline-info edit" data-id="{{ $myarticle->id }}"><i class="icofont-ui-edit"></i></a>                               
+                                {!! Form::model($myarticle,array('route'=>['farmer.article.destroy',$myarticle],'method'=>'DELETE','class'=>'d-inline')) !!}
                                 {!! Form::button('<i class="icofont-ui-delete"></i>',['type'=>'submit','class'=>'btn btn-sm btn-outline-danger  clearfix'])  !!}
                                 {!! Form::close() !!}
                                     </div>

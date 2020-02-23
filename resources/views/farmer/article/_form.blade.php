@@ -1,3 +1,9 @@
+
+{{-- <div class="custom-file">
+    <input type="file" class="custom-file-input" id="customFile" name="articleimage">
+    <label class="custom-file-label" for="customFile">Wybierz plik obrazu</label>
+  </div> --}}
+
 <div class="form-group {{ $errors->has('category_id') ? 'has-error' : '' }}">
     <div id="category" class="btn btn-secondary"></div>
    <div id="category_container"></div>
@@ -20,9 +26,12 @@
 <div class="form-group {{ $errors->has('feature_id') ? 'has-error' : '' }}">
     {!! Form::label('feature_id','Cechy')  !!}
     @foreach ($features as $feature)
-        {!! Form::checkbox('feature[]', $feature->name) !!}
+        <div class="form-check form-check-inline">
+            {!! Form::label('unit_id',$feature->name,['class'=>'form-check-label'])  !!}
+            {!! Form::checkbox('feature[]', $feature->id,false,['class'=>'form-check-input']) !!}
+        </div>
     @endforeach
-    {!! Form::select('feature_id',$features ,null,['class'=>($errors->has('feature_id')) ? 'form-control is-invalid' : 'form-control'])  !!}
+    {{-- {!! Form::select('feature_id',$features ,null,['class'=>($errors->has('feature_id')) ? 'form-control is-invalid' : 'form-control'])  !!} --}}
     <span class="text-danger">{{ $errors->first('feature_id') }}</span>
 </div>
 <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">

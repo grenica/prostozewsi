@@ -9,9 +9,9 @@ class Article extends Model
     protected $dates = ['deleted_at']; 
     protected $fillable = [
         'name', 'price','desc','category_id','farmer_id',
-        'unit_id','articleimages_id','feature_id'
+        'unit_id'
     ];
-
+    //'articleimages_id',,'feature_id'
 
     public function unit() {
         return $this->belongsTo(Unit::class);
@@ -30,6 +30,7 @@ class Article extends Model
     }
 
     public function features() {
-        return $this->belongsToMany(Feature::class);
+      //  return $this->belongsToMany(Feature::class);
+        return $this->hasMany(Feature::class);
     }
 }

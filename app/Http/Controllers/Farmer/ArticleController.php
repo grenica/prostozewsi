@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Farmer;
 
+use App\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Feature;
@@ -9,6 +10,7 @@ use App\Region;
 use App\Category;
 use App\Unit;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -20,7 +22,7 @@ class ArticleController extends Controller
     public function index()
     {
         $authuser = Auth::user();
-        $myarticles= $authuser->farmer->article;
+        $myarticles= $authuser->farmer->articles;
         return view("farmer.article.index")->with(compact('myarticles'));
     }
 
@@ -46,7 +48,20 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $request->validate([
+            'name' => 'required|min:4',
+            'unit_id' => 'required',
+            'price' => 'required',
+            'category_id' =>'required'
+        ]);
+        $authuser = Auth::user();
+        $features= $request->feature;
+       // dd($features);
+        $authuser->farmer()->first()->articles()->create($request->all());
+        //dodaje cechy do artykułu
+       // $authuser->farmer()->first()->articles()->features()->first()->attach($features);
+        return redirect()->route('farmer.artimages.create');
     }
 
     /**
@@ -57,7 +72,20 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        // $f = Storage::files();
+        // dd($f);
+        // $path = public_path('products');
+       // $files = Storage::allfiles('avatars');
+       // dd($files);
+       // $visibility = Storage::getVisibility('public/avatars/n5fUUWo3kopDozHCH7iJ9tUgt8ifs84PYLaOFNQp.jpeg');
+        //dd($visibility);
+       // $url = Storage::url('public/avatars/n5fUUWo3kopDozHCH7iJ9tUgt8ifs84PYLaOFNQp.jpeg');
+       // dd($url);
+       
+
+        $article = Article::find($id);
+        $images = $article->articleimages;
+        return view('farmer.article.show',compact('article','images'));
     }
 
     /**
