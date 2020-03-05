@@ -17,3 +17,52 @@
 ul {
     list-style: none;
 }
+/* strona głowna*/
+#start {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    //background-color: #257c80;
+    // height: 100vh;
+    // background-image: url('../public/img/tlo1.webp');
+    // background-repeat: no-repeat;
+    // background-size: cover;
+}
+.header_start {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+
+}
+.main_start {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../public/img/tlo1.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+.info_start {
+    h3 {
+        font-weight: bold;
+        font-size: 35px;
+    }
+    h4 {
+        font-size: 30px;
+    }
+}
+.notification {
+    background-color: #1b581e;
+    color: white;
+    padding: 10px;
+}
+.cat {
+    list-style: none;
+    display: flex;
+    padding: 5px 8%;
+    justify-content: center;
+}

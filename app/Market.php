@@ -18,4 +18,8 @@ class Market extends Model
   public function farmers() {
     return $this->belongsToMany(Farmer::class);
     }
+
+  public function clients() {
+      return $this->belongsToMany(Client::class);
+  }
 }

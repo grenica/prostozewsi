@@ -11,9 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/', function () {
+//     //return view('welcome2');
+// });
+Route::get('/', 'StartController@index')->name('start');
+Route::get('/setcookie/{id}', 'StartController@setCookie')->name('setcookie');
+
 
 Auth::routes();
 

@@ -86,10 +86,23 @@ class User extends Authenticatable
         }
        
     }
+    public function isClient() {
+        if($this->roles->first()->name =='Klient'){
+            return true;
+        } else {
+            return false;
+        }
+       
+    }
 
     public function farmer() {
         //  return $this->hasMany(Farmers::class);
          return $this->hasOne(Farmer::class);
+    }
+
+    public function client() {
+        //  return $this->hasMany(Farmers::class);
+         return $this->hasOne(Client::class);
     }
 
     // public function roles() {

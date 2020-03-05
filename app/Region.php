@@ -14,4 +14,9 @@ class Region extends Model
     {
       return $this->hasMany(Farmer::class);
     }
+
+    public function clients()
+    {
+      return $this->hasMany(Client::class);
+    }
 }

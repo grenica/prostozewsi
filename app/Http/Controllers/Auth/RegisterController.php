@@ -65,12 +65,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //dd($data);
+
         $typ = $data['typ'];
         if($typ==0) {
             $rola = Role::where('name','Klient')->first();
         } else {
             $rola = Role::where('name','Rolnik')->first();
         }
+        //dd($rola->id);
         $rola->users()->create([
             'name' => $data['name'],
             'email' => $data['email'],
