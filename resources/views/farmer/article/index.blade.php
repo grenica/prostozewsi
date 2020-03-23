@@ -17,9 +17,13 @@
              
             <!--<p class="card-text">Text</p> -->
             
-            <a class="btn guzik" data-toggle="modal">
+            {{-- <a class="btn guzik" data-toggle="modal">
                 <i class="icofont-plus-circle icofont-2x"></i>
+            </a> --}}
+            <a class="btn" href="{{ route('farmer.article.create')}}">
+              <i class="icofont-plus-circle icofont-2x"></i>
             </a>
+
             @if ($myarticles->isEmpty())
                 <div class="alert alert-danger" role="alert">
                     Brak rekordów !!!
@@ -63,13 +67,14 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Dodaj nowy plan</h5>
+        <h5 class="modal-title" id="exampleModalCenterTitle">Dodaj nowy artykuł</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form id="form">
+      
         <div class="modal-body">
+        {{-- <form id="form">
         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 {!! Form::label('name','Nazwa planu')  !!}
                 {!! Form::text('name',null,['class'=> ($errors->has('name')) ? 'form-control is-invalid' : 'form-control'])  !!}
@@ -99,10 +104,40 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Zapisz</button>
         </div>
-      </form>
+      </form> --}}
+      {!! Form::open(array('route'=>'farmer.article.store','files'=>'true')) !!}
+      
+                        @include('farmer.article._form')
+                        {{-- {!! Form::hidden('plan_id', $plan->id ) !!} --}}
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Zapisz</button>
+      {!! Form::close() !!}
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="ModalCategories" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Wybierz kategorię</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {{-- <form id="form"> --}}
+        <div class="modal-body">
+            <div id="wynik">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      {{-- </form> --}}
+    </div>
+  </div>
+</div>
+
+
 
 @endsection
 
@@ -115,7 +150,72 @@ $(document).ready(function() {
           }
   });
 
+  $("#category").click(function() {
+      //console.log("ma być ajax");
+      $.ajax({
+          url: "{{ route('ajax_cat')}}",
+          type: "GET",
+          dataType: "json",
+          success: function(data) {
+            $('#ModalCategories').modal("show");
+            $("#wynik").empty();
+            var html='';
+            console.log(data);
+            $.each(data, function(index,value){
+                $.each(value, function(key,v){
+                    if(v.children.length >0) {
+                      haschildren = 1;
+                    } else {
+                      haschildren = 0;
+                    }
+                    html+='<div data-id='+v.id+' data-haschilden='+haschildren+' class="pos">'+v.name+'</div>';
+                });
+            });
+           $("#wynik").append(html);
+            
+          }
+      });
+  }); 
 
+  $(document).on("click",".pos",function() {
+     // console.log("To jestsem");
+        $("#category_container").empty();
+        child = $(this).attr("data-haschilden");
+        id = $(this).attr("data-id");
+        t = $(this).text();
+        if(child==0) {
+            // nie ma dzieci
+            $("#category_container").append("<div>"+t+"</div>");
+            $('#ModalCenter').modal("hide");
+            $("#category_id").val(id);
+           
+        } else {
+            $.ajax({
+            url: "/ajax_cat_detail/"+id,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+             // $('#ModalCenter').modal("show");
+              $("#wynik").empty();
+              var html='';
+              console.log(data);
+              $.each(data, function(index,value){
+                  $.each(value, function(key,v){
+                      console.log(key +': '+ v.name);
+                      if(v.children.length >0) {
+                      haschildren = 1;
+                    } else {
+                      haschildren = 0;
+                    }
+                      html+='<div data-id='+v.id+' data-haschilden='+haschildren+' class="pos">'+v.name+'</div>';
+                      
+                  });
+              });
+            $("#wynik").append(html); 
+            }
+        });
+        }
+  });
   $('#form').on('submit', function(e){
       e.preventDefault();
       
@@ -124,23 +224,20 @@ $(document).ready(function() {
       var metoda = '';
 
       if(state == '') {
-        action_url = "{{ route('admin.plan.store') }}";
+        action_url = "{{ route('farmer.article.store') }}";
         metoda = "POST";
       } else {
-        action_url = '/admin/plan/'+state;
+        action_url = '/farmer/article/'+state;
         metoda = "PUT";
       }
         $.ajax({
           data: $('#form').serialize(),
-          // url: "{{ route('admin.plan.store') }}",
-          // type: "POST",
           url: action_url,
           type: metoda,
           dataType: "json",
           success: function(data) {
             // chowam formularz
             $('#ModalCenter').modal("hide");
-           // html = '<div class="alert alert-success" role="alert">'+ data.success +'</div>';
             $('#form')[0].reset();
             
           },
@@ -168,13 +265,14 @@ $(document).ready(function() {
     var id = $(this).attr('data-id');
     //console.log(id);
     $.ajax({
-      url: "/admin/plan/"+id+"/edit",
+      url: "/farmer/article/"+id+"/edit",
       dataType:"json",
       success: function(data) {
           $('#name').val(data.result.name);
           $('#desc').val(data.result.desc);
           $('#price').val(data.result.price);
-          $('#diff_dates').val(data.result.diff_dates);
+          $('#unit_id').val(data.result.unit_id);
+          $('#feature_id').val(data.result.feature_id);
           $('#hidden_id').val(data.result.id);
           // dodaje ukrutą metode do ubsługi PUT (UPDATE)
           $('#form').append('<input type="hidden" name="_method" value="PUT">');
@@ -272,26 +370,6 @@ $(document).ready(function() {
 
 });
   </script>
-
-
-<script>
-  // if(state != '') {
-      //   console.log('/admin/plan/'+state);
-      //   $.ajax({
-      //     data: $('#form').serialize(),
-      //     url: '/admin/plan/'+state,
-      //     type: "PUT",
-      //     dataType: "json",
-      //     success: function(data) {
-      //       // chowam formularz
-      //       $('#ModalCenter').modal("hide");
-      //     },
-      //     error: function(data) {
-      //       console.log('Error', data);
-      //     }
-      //   });
-      // }
-</script>
 
 @endsection
 

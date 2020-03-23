@@ -34,7 +34,7 @@ export default {
     },
 
     mounted: function(){
-        axios.get('http://localhost/api/category')
+        axios.get('/api/category')
             .then(response => this.categories = response.data);
     },
 }

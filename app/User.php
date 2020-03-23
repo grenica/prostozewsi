@@ -9,11 +9,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Role;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 // class User extends Model //implements Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
     //use Authenticatable;
 
     /**

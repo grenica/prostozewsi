@@ -54,7 +54,9 @@ class LoginController extends Controller
                 break;
             case 'Rolnik':
                     return '/panel';
-                break; 
+                break;
+            // case 'Klient':
+            //         return '/';
             default:
                     return '/login'; 
                 break;

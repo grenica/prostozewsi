@@ -2,7 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Welcome from './views/Welcome.vue';
+import LoginForm from './views/LoginForm.vue';
 import CategoryDetail from './components/CategoryDetail.vue';
+import Logout from './components/Logout.vue';
 
 Vue.use(VueRouter);
 
@@ -21,7 +23,22 @@ const routes = [
         path: '/category/:id',
         name: 'category',
         component: CategoryDetail
-    }
+    },
+    {
+        path: '/farmer/:id',
+        name: 'farmer',
+        component: CategoryDetail
+    },
+    {
+        path: '/login2',
+        name: 'login2',
+        component: LoginForm
+    },
+    // {
+    //     path: '/logout',
+    //     name: 'logout',
+    //     component: Logout
+    // }
 ];
 
 

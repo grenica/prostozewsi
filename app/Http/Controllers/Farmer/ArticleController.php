@@ -22,8 +22,12 @@ class ArticleController extends Controller
     public function index()
     {
         $authuser = Auth::user();
+        $features = Feature::all();
+        $category = Category::all();
+        $units = Unit::pluck('name','id');
+        $features =Feature::all();
         $myarticles= $authuser->farmer->articles;
-        return view("farmer.article.index")->with(compact('myarticles'));
+        return view("farmer.article.index")->with(compact('myarticles','category','units','features'));
     }
 
     /**

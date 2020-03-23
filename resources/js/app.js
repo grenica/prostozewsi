@@ -33,15 +33,33 @@
 
 window.axios = require('axios');
 
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue').default
+);
+
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
+
 import Vue from 'vue';
 
 import App from './App.vue';
 import router from './router';
+import store from './store';
+
 
 Vue.config.productionTip = false;
 
 new Vue({
     el: '#app',
+    store,
     router,
     render: h => h(App)
 }).$mount('#app')

@@ -1,6 +1,7 @@
 <template>
     
     <main>
+        <!-- <router-view name="l"></router-view> -->
        <Header />
        <!-- <router-link to="/">Home</router-link>
         <router-link to="/about">O nas</router-link> -->
@@ -8,7 +9,7 @@
         <!-- <a class="btn btn-danger" href="#">Czesc</a> -->
         
         <router-view></router-view>
-        
+        <Footer />
     </main>
    
 </template>
@@ -16,13 +17,14 @@
 <script>
 
 import Vuex from 'vuex';
+import axios from 'axios';
 import Header from './components/Header.vue';
-// import Footer from './components/Footer.vue';
+import Footer from './components/Footer.vue';
 
 export default {
     components: {
         Header,
-     //   Footer
+        Footer
     },
 
     // mounted: function(){
@@ -30,6 +32,10 @@ export default {
     // },
     // created: function() {
     //     console.log('created w App');
+    // }
+    // created() {
+    //     axios.defaults.headers.common["Authorization"] = "Bearer "+localStorage.getItem("token");
+    //     this.$store.dispatch('getUser');
     // }
     
 }

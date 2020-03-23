@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use App\Market;
+use Illuminate\Cookie\CookieJar;
 
 class StartController extends Controller
 {
@@ -28,9 +29,17 @@ class StartController extends Controller
     public function setCookie($id) {
         
         $mymarket = Market::find($id);
-        // dd($mymarket);
-        //$cookie = cookie('market',$distropoints->id , $minutes);
-        return redirect()->route('start')->withCookie(cookie()->forever('market',$mymarket));
+        $minutes = 10000;
+        // return redirect()->route('start')->withCookie(cookie()->forever('market',$mymarket));
+        $data = [
+            'id' => $mymarket->id,
+            'name' => $mymarket->name,
+            'city' => $mymarket->city
+        ];
+        $json = json_encode($data);
+        //dd($json);
+
+        return redirect()->route('start')->cookie('market', $json, $minutes, null, null, false, false);
     }
 
     
