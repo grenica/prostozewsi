@@ -1,13 +1,20 @@
 <template>
     <div class="article-list">
-       <!-- <h3>Nowości <span class="badge badge-secondary">New</span></h3> -->
-        <div v-for="item in products" v-bind:key="item.id" class="item-pos">
-            <img v-bind:src="'/storage/produkty/'+ item.image" />
+       <h3>Nowości <span class="badge badge-secondary">New</span></h3>
+        <div v-for="item in products" v-bind:key="item.id" class="item_pos">
+            <router-link :to="{ name:'product', params:{id:item.id}}" >
+                <!-- <div v-for="img in item.images" v-bind:key="img.id">
+                    <img v-if="img.isdefault" v-bind:src="'/storage/produkty/'+ img.image" />
+                </div> -->
+               <img v-bind:src="'/storage/produkty/'+ item.image" /> 
+            </router-link>
             <p class="farmer">{{ item.FarmerName }}</p>
+            
             <div class="price_block">
-               <span>{{ item.price}} zł </span>/{{ item.Unit}}
+               <span class="strong">{{ item.price}} zł </span>/{{ item.Unit}}
             </div>
-            <a href="#" class="add-card"><i class="icofont-cart"></i>Dodaj do koszyka</a>
+            <!-- <div class="add-card" @click="addProductToCart(item)"><i class="icofont-cart"></i>Dodaj do koszyka</div> -->
+            <AddCard :product="item"/>
         </div>
     </div>
     
@@ -17,14 +24,17 @@
 <script>
 // import Cookies from "js-cookie"; 
 
-
+import AddCard from '../components/AddCard.vue';
 export default {
-    data() {
-       return {
-            news: null,
-            marketID: null,
-        }
+    components: {
+        AddCard,       
     },
+    // data() {
+    //    return {
+    //         news: null,
+    //         marketID: null,
+    //     }
+    // },
     // created: function() {
     //     let cookie = Cookies.get('market');
     //     this.marketID = JSON.parse(cookie).id;
@@ -52,8 +62,15 @@ export default {
     },
     computed: {
         products() {
-            return this.$store.state.productsNew;
+            //return this.$store.state.productsNew;
+            return this.$store.state.products;
+        }
+    },
+    methods: {
+        addProductToCart(product) {
+            this.$store.dispatch('addToCart',product);
         }
     }
+    
 }
 </script>

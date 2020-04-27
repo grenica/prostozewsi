@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::group(['prefix'=>'farmer'], function () {
             Route::resource('/profil', 'Farmer\FarmerController',['as'=>'farmer']);
             Route::resource('/payment', 'Farmer\PaymentController',['as'=>'farmer']);
+            Route::resource('/order', 'Farmer\OrderController',['as'=>'farmer']);
             Route::resource('/market', 'Farmer\MarketController',['as'=>'farmer']);
             Route::resource('/article', 'Farmer\ArticleController',['as'=>'farmer']);
          //   Route::resource('/artimages/{idarticle}', 'Farmer\ArticleImagesController',['as'=>'farmer']);

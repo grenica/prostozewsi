@@ -16,6 +16,11 @@ class DashboardController extends Controller
     public function index()
     {
         $authuser = Auth::user();
+        //sprawdzam czy jest coś w modelu relacji (jakiś rekord)
+        if(!$authuser->farmer()->exists()) {
+            //dodaj pierwszy rekord w tabeli farmers
+            return redirect()->route('farmer.profil.index');
+        }
         $articles=$authuser->farmer->articles;
         return view('farmer.dashboard.index',compact('articles'));
     }

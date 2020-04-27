@@ -25,3 +25,9 @@ Route::post('/login_store','Api\AuthController@login');
 Route::post('/login2','Api\AuthController@login2');
 
 Route::middleware('auth:api')->get('/current','Api\AuthController@currentUser');
+
+Route::get('/product/{id}','Api\ProductController@getProduct');
+
+// Route::post('/order','Api\OrderController@store');
+// Route::post('/order2','Api\OrderController@store');
+Route::middleware('auth:api')->post('/order2','Api\OrderController@store');

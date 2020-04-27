@@ -18,11 +18,17 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            // if (Auth::user()->isAdmin()) {
-            //     return redirect('/admin');
-            // }
-            return redirect(RouteServiceProvider::HOME);
+        // if (Auth::guard($guard)->check()) {
+        //     // if (Auth::user()->isAdmin()) {
+        //     //     return redirect('/admin');
+        //     // }
+        //    return redirect(RouteServiceProvider::HOME);
+        // }
+        if (Auth::guard($guard)->check() && auth()->user()->isAdmin()){
+            return redirect('/admin');
+        }
+        if (Auth::guard($guard)->check() && auth()->user()->isFarmer()){
+            return redirect('/panel');
         }
 
         return $next($request);

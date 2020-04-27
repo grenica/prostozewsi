@@ -1,22 +1,22 @@
 <template>
     <div class="logo_wrapper">
-        <p>Logo</p>
+        <router-link :to="{name: 'welcome'}">Home</router-link>
         <Search />
         <Login />
-        <Card />
+        <CardHeader />
     </div>
     
 </template>
 <script>
 import Search from '../components/Search.vue';
 import Login from '../components/Login.vue';
-import Card from '../components/Card.vue';
+import CardHeader from '../components/CardHeader.vue';
 
 export default {
     components: {
     Search,
     Login,
-    Card,    
+    CardHeader,    
    },
 }
 </script>

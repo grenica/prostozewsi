@@ -74,15 +74,23 @@ class RegisterController extends Controller
             $rola = Role::where('name','Rolnik')->first();
         }
         //dd($rola->id);
-        $rola->users()->create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        // $rola->users()->create([
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'password' => Hash::make($data['password']),
+        // ]);
         // return User::create([
         //     'name' => $data['name'],
         //     'email' => $data['email'],
         //     'password' => Hash::make($data['password']),
         // ]);
+        $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+        ]);
+        $user->roles()->attach($rola);
+
+        return $user;
     }
 }

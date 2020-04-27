@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Farmer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Market;
 use Illuminate\Support\Facades\Auth;
+use App\Order;
+use App\Article;
+use Carbon\Carbon;
+use DB;
 
-class MarketController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +19,21 @@ class MarketController extends Controller
      */
     public function index()
     {
-        $authuser = Auth::user(); 
-        $allmarkets = Market::pluck('name','id');
-        $mymarkets = $authuser->farmer->markets;
-       
-        return view('farmer.market.index',compact('mymarkets','allmarkets'));
+        $authuser = Auth::user();
+        //TODO
+        
+        $orders = Article::where('farmer_id',$authuser->farmer->id)
+        ->join('order_items','order_items.article_id','articles.id')
+        ->join('orders','orders.id','order_items.order_id')
+        ->join('units','units.id','articles.unit_id')
+        ->select('articles.name','units.name as unit', DB::raw('SUM(order_items.quantity) as total_quantity'))
+        ->where('orders.created_at','>',Carbon::now()->subDays(1)->format('Y-m-d')) //dwa dni temu !??
+        ->groupBy('articles.name','units.id')
+        ->get();
+      
+          //  dd($orders);
+        
+        return view('farmer.order.index',compact('orders'));
     }
 
     /**
@@ -30,8 +43,7 @@ class MarketController extends Controller
      */
     public function create()
     {
-        $allmarkets = Market::pluck('name','id');
-        return view('farmer.market.create',compact('allmarkets'));
+        //
     }
 
     /**
@@ -42,12 +54,7 @@ class MarketController extends Controller
      */
     public function store(Request $request)
     {
-        
-       // dd($request->market_id);
-        $markerid = Market::find($request->market_id);
-        //dd($markerid);
-        Auth::user()->farmer()->first()->markets()->attach($markerid);
-       return redirect()->route('farmer.market.index');
+        //
     }
 
     /**
@@ -69,10 +76,7 @@ class MarketController extends Controller
      */
     public function edit($id)
     {
-        if(request()->ajax()) {
-            $market = Market::findOrFail($id);
-            return response()->json(['result'=> $market]);
-        }
+        //
     }
 
     /**
@@ -84,11 +88,7 @@ class MarketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->ajax()) {
-            $markets = Market::findOrFail($request->hidden_id);
-            $markets->update($request->all()); 
-           return response()->json(['success' => $request]);
-        }
+        //
     }
 
     /**
@@ -99,8 +99,6 @@ class MarketController extends Controller
      */
     public function destroy($id)
     {
-        $markets = Market::find($id);
-        $markets->delete();
-        return redirect()->route('farmer.market.index')->with('status','Pozycja została usunięta !!');
+        //
     }
 }

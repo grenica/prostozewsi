@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="store_header">
         <div class="notification">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cookie = {{ marketObj.name }}
         </div>

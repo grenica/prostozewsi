@@ -26,4 +26,7 @@ class Client extends Model
     public function markets() {
         return $this->belongsToMany(Market::class);
     }
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
 }

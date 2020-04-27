@@ -33,4 +33,8 @@ class Article extends Model
       //  return $this->belongsToMany(Feature::class);
         return $this->hasMany(Feature::class);
     }
+    public function orderItem() {
+       
+          return $this->hasMany(OrderItem::class);
+      }
 }

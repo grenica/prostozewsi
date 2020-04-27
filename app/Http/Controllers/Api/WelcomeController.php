@@ -19,7 +19,6 @@ class WelcomeController extends Controller
     public function news($id)
     {
         $tab = array();
-        $tab2 = array();
 
       $farmers = Market::find($id)->farmers;
        foreach($farmers as $farmer) {
@@ -42,13 +41,18 @@ class WelcomeController extends Controller
         ->join('articleimages','articles.id','=','articleimages.article_id')
         ->join('units','articles.unit_id','=','units.id')
         ->join('farmers','articles.farmer_id','=','farmers.id')
-        ->select('articles.id','articles.name','articles.desc','articles.price','articleimages.image')
-        ->addselect('units.name as Unit','farmers.name as FarmerName')
+        ->select('articles.id','articles.name','articles.desc','articles.price','articles.created_at')
+        ->addSelect('articleimages.image')
+        ->addselect('units.name as Unit','farmers.name as FarmerName','farmers.id as FarmerId')
         ->where('articleimages.isdefault',1)
         ->orderBy('articles.created_at','desc')
         ->whereIntegerInRaw('articles.farmer_id',$tab)->take(4)
         ->get();
-    //    return $farmers;
+       
+    // do obiektu art dodaje pole "images"
+    // foreach($products as $art) {
+    //     $art->images = Article::find($art->id)->articleimages()->get(['id','image','isdefault']);
+    // }
     return $products;
     }
 

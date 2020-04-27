@@ -1,16 +1,15 @@
 <template>
     
-    <main>
+    <div class="app_wrapper">
         <!-- <router-view name="l"></router-view> -->
        <Header />
        <!-- <router-link to="/">Home</router-link>
         <router-link to="/about">O nas</router-link> -->
         <!-- <h3>Hello world</h3> -->
         <!-- <a class="btn btn-danger" href="#">Czesc</a> -->
-        
         <router-view></router-view>
         <Footer />
-    </main>
+    </div>
    
 </template>
 

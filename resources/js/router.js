@@ -34,6 +34,21 @@ const routes = [
         name: 'login2',
         component: LoginForm
     },
+    {
+        path: '/cart',
+        name: 'cart',
+        component: () => import('./views/Cart.vue')
+    },
+    {
+        path: '/product/:id',
+        name: 'product',
+        component: () => import('./views/Product.vue')
+    },
+    {
+        path: '/thanks',
+        name: 'thanks',
+        component: () => import('./views/Thanks.vue')
+    },
     // {
     //     path: '/logout',
     //     name: 'logout',
@@ -43,7 +58,7 @@ const routes = [
 
 
 const router = new VueRouter({
-    // mode: 'history',
+    mode: 'history',
     routes: routes,
     //akywny link - dodaje klase 'active'
     linkActiveClass: 'active'
