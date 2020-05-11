@@ -9,13 +9,15 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "consoletvs/charts": "6.*",
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
         "laravel/framework": "^6.2",
         "laravel/passport": "^8.4",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.1",
-        "laravelcollective/html": "^6.0"
+        "laravelcollective/html": "^6.0",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

@@ -11,7 +11,7 @@
       <div class="col-12">
         <div class="card">
         <div class="card-header">
-        <h3 class="card-title">Moje rynki</h3>
+        <h3 class="card-title">Moje płatności</h3>
         </div>
           <div class="card-body">
              
@@ -20,37 +20,33 @@
             <a class="btn guzik" data-toggle="modal">
                 <i class="icofont-plus-circle icofont-2x"></i>
             </a>
-            @if ($mymarkets->isEmpty())
-                <div class="alert alert-danger" role="alert">
-                    Brak przypisanych rynków !!!
-                </div>
-            @else
+           
                     <table class="display table table-bordered table-hover dataTable">
                        <thead>
                            <tr>
                                <th>ID</th>
-                               <th>Nazwa</th>
+                               <th>Okres ważności</th>
+                               <th>Koszt</th>
+                               <th>Plan</th>
                            </tr>
                         </thead>
                         <tbody>
-                            @foreach ($mymarkets as $market)
+                            @foreach ($payments as $payment)
                                 <tr>
-                                <td>{{$market->id }}</td>
-                                <td>{{$market->name }}</td>
+                                <td>{{$payment->id }}</td>
+                                <td>{{$payment->created_at }} - {{$payment->stopdata}}</td>
+                                <td>{{$payment->price }} zł</td>
+                                <td>{{$payment->plan->name}}</td>
                                 <td>
-                                    <div class="float-right">
-                                        
-                                <a class="btn btn-outline-info edit" data-id="{{ $market->id }}"><i class="icofont-ui-edit"></i></a>                               
-                                {!! Form::model($market,array('route'=>['farmer.market.destroy',$market],'method'=>'DELETE','class'=>'d-inline')) !!}
-                                {!! Form::button('<i class="icofont-ui-delete"></i>',['type'=>'submit','class'=>'btn btn-sm btn-outline-danger  clearfix'])  !!}
-                                {!! Form::close() !!}
+                                    <div class="float-right">     
+                                    <a class="btn btn-outline-info edit" data-id="{{ $payment->id }}"><i class="icofont-ui-edit"></i></a>
                                     </div>
                                 </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-            @endif
+            
 
           </div>
         </div>
@@ -59,7 +55,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog"  aria-hidden="true">
+{{-- <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog"  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -80,11 +76,11 @@
       </form>
     </div>
   </div>
-</div>
+</div> --}}
 
 @endsection
 
-@section('js')
+{{-- @section('js')
 <script>
 $(document).ready(function() {
   $.ajaxSetup({
@@ -160,10 +156,10 @@ $(document).ready(function() {
 
 });
 </script>
-@endsection
+@endsection --}}
 
 
-@section('js_OLD')
+{{-- @section('js_OLD')
   <script>
     $(document).ready(function(){
     $('#form').on('submit', function(event){
@@ -248,5 +244,5 @@ $(document).ready(function() {
 });
   </script>
 
-@endsection
+@endsection --}}
 

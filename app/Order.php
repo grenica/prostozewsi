@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $dates = ['created_at'];
+    
     protected $fillable = [
         'market_id', 'client_id','canceled','home_delivery'
     ];

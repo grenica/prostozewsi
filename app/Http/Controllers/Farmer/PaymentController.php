@@ -18,7 +18,12 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return view('farmer.payment.index');
+    //     $user = Auth::user();
+    //     $payments = $user->farmer;
+        $f = Auth::user()->farmer;
+        // dd($f);
+        $payments = Payment::where('farmer_id',$f->id)->orderBy('id','desc')->get();
+        return view('farmer.payment.index',compact('payments'));
     }
 
     /**

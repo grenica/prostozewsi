@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Farmer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Yajra\DataTables\DataTables;
 
 class DashboardController extends Controller
 {
@@ -13,7 +16,7 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $authuser = Auth::user();
         //sprawdzam czy jest coś w modelu relacji (jakiś rekord)
@@ -22,9 +25,63 @@ class DashboardController extends Controller
             return redirect()->route('farmer.profil.index');
         }
         $articles=$authuser->farmer->articles;
-        return view('farmer.dashboard.index',compact('articles'));
+        // dd(Carbon::now()->subDays(9)->format('Y-m-d'));
+        $lastEarn = $this->lastEarnings($authuser)[0];
+        // dd($lastEarn);
+        $allClients = $this->allClients($authuser);
+        // dd($allClients);
+        $bs = $this->bestsellers($authuser);
+        // dd($bs);
+        if ($request->ajax()) {
+            return DataTables::of($bs)
+                ->addIndexColumn()
+                // ->addColumn('action', function ($row) {
+                //     $btn = 'Edit';
+                //     $btn = $btn . ' Delete';
+                //     return $btn;
+                // })
+                // ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('farmer.dashboard.index',compact('articles','lastEarn','allClients','bs'));
     }
+    private function lastEarnings($user) {
+        //zysk z zamowień 10 dni wstecz
+        $last = DB::table('order_items')
+        ->join('articles','order_items.article_id','articles.id')
+        ->join('orders','order_items.order_id','orders.id')
+        //,DB::raw('COUNT(DISTINCT(order_items.order_id)) as count_orders')
+        ->select(DB::raw('SUM(order_items.quantity * order_items.price) as lastEarn,COUNT(DISTINCT(order_items.order_id)) as countOrders'))
+        // ->distinct('order_items.order_id')
+        // ->count('order_items.order_id')
+        ->whereDate('orders.created_at','>',Carbon::now()->subDays(10)->format('Y-m-d'))
+        ->where('articles.farmer_id',$user->farmer->id)
+        ->groupBy('articles.farmer_id')
+        ->get();
+        return $last;
+    }
+    private function allClients($user) {
+        $allClients = DB::table('order_items')
+        ->join('articles','order_items.article_id','articles.id')
+        ->join('orders','order_items.order_id','orders.id')
+        ->where('articles.farmer_id',$user->farmer->id)
+        ->distinct()
+        ->count('orders.client_id');
 
+        return $allClients;
+    }
+    private function bestsellers($user) {
+        $bs = DB::table('order_items')
+        ->join('articles','order_items.article_id','articles.id')
+        ->join('orders','order_items.order_id','orders.id')
+        ->select('order_items.article_id','articles.name',DB::raw('SUM(order_items.quantity) as Ilosc'))
+        ->where('articles.farmer_id',$user->farmer->id)
+        ->groupBy('order_items.article_id')
+        ->orderBy('Ilosc','desc')
+        ->get();
+
+        return $bs;
+    }
     // /**
     //  * Show the form for creating a new resource.
     //  *

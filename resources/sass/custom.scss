@@ -1,10 +1,21 @@
+ul {
+    margin:0;
+    padding: 0;
+}
 .app {
     display: flex;
     min-height: 100vh;
 }
-
+// gradienty
+.gradient1 {
+    background: linear-gradient(60deg,#FBA4A0,#FC5587);
+}
+.gradient2 {
+    background: linear-gradient(60deg,#2f8371,#78cf78);
+}  
 .sidebar {
-    background-color: #7bc066;
+    // background-color: #7bc066;
+    background: linear-gradient(to top, $teal, $green);
     flex-basis: 12rem;
 }
 .app_page {
@@ -187,19 +198,19 @@ ul {
     }
     
 }
-.cart {
-    ul {
-        padding: 0;
-        margin: 0 60px;
-        li {
-            display: grid;
-            grid-template-columns: 1fr 1fr 100px 1fr;
-        }
-        a {
-            margin: auto 0;
-        }
-    }
-}
+// .cart {
+//     ul {
+//         padding: 0;
+//         margin: 0 60px;
+//         li {
+//             display: grid;
+//             grid-template-columns: 1fr 1fr 100px 1fr;
+//         }
+//         a {
+//             margin: auto 0;
+//         }
+//     }
+// }
 .active {
     z-index: 150;
 }
@@ -219,6 +230,26 @@ ul {
     &:hover {
         cursor: pointer;
     }
+}
+.lista {
+    a {
+        color: #faf4f4;
+        font-weight: bold;
+        padding: 4%;
+        display: flex;
+        align-items: center;
+        transition: background-color .3s ease-in;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.192);
+            color: #425742;
+            text-decoration: none;
+            
+        }
+        i {
+            margin-right: 10px;
+        }
+    }
+
 }
 footer {
     background-color: #82aa76;

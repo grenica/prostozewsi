@@ -2,6 +2,14 @@
 
 @section('content')
 <div class="container">
+  <div class="row">
+    @foreach ($images as $image)
+      <div class="col-4">
+        <img src="{{asset('storage/produkty/'.$image->image)}}" class="img-thumbnail rounded h-100">
+      </div>    
+        @endforeach 
+    
+  </div>
  <div class="row">
    <div class="col-12">
        @if ($article->articleimages->isEmpty())
@@ -18,9 +26,9 @@
         {{-- <img src="holder.js/100x180/" alt=""> --}}
         {{-- <img src="{{ Storage::disk('products')->url($article->articleimages->image) }}" alt=""> --}}
        <div class="card-body">
-        @foreach ($images as $image)
+        {{-- @foreach ($images as $image)
           <img src="{{asset('storage/produkty/'.$image->image)}}" class="img-thumbnail">
-        @endforeach 
+        @endforeach  --}}
        <h4 class="card-title">{{$article->name}}</h4>
          {{-- <h6 class="card-subtitle text-muted">Subtitle</h6> --}}
          <a href="{{ route('farmer.artimages.create',$article->id)}}" class="btn btn-primary btn-lg">Dodaj zdjęcie</a>

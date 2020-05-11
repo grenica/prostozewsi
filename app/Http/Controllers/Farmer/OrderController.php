@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Order;
 use App\Article;
+use App\OrderItem;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -22,18 +23,29 @@ class OrderController extends Controller
         $authuser = Auth::user();
         //TODO
         
-        $orders = Article::where('farmer_id',$authuser->farmer->id)
+        $orders_report = Article::where('farmer_id',$authuser->farmer->id)
         ->join('order_items','order_items.article_id','articles.id')
         ->join('orders','orders.id','order_items.order_id')
         ->join('units','units.id','articles.unit_id')
         ->select('articles.name','units.name as unit', DB::raw('SUM(order_items.quantity) as total_quantity'))
-        ->where('orders.created_at','>',Carbon::now()->subDays(1)->format('Y-m-d')) //dwa dni temu !??
+        ->where('orders.created_at','>',Carbon::now()->subDays(4)->format('Y-m-d')) //dwa dni temu !??
         ->groupBy('articles.name','units.id')
         ->get();
       
           //  dd($orders);
-        
-        return view('farmer.order.index',compact('orders'));
+        $orders = DB::table('order_items')
+        ->join('articles','order_items.article_id','articles.id')
+        ->join('orders','order_items.order_id','orders.id')
+        // ->sum('order_items.quantity * order_items.price')
+        ->select('orders.id','orders.created_at',DB::raw('SUM(order_items.quantity * order_items.price) as value'))
+        ->whereDate('orders.created_at','>',Carbon::now()->subDays(4)->format('Y-m-d'))
+        ->where('articles.farmer_id',$authuser->farmer->id)
+        ->groupBy('orders.id')
+        ->orderByDesc('orders.created_at')
+        ->get();
+
+        // dd($orders);
+        return view('farmer.order.index',compact('orders','orders_report'));
     }
 
     /**
@@ -65,7 +77,27 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $total = 0;
+        $farmerid = Auth::user()->farmer->id;
+        //dd($farmerid);
+        $order = Order::find($id);
+        // listuje zamówienia towarów tylko danego rolnika
+        $orderitems= $order->orderitems;
+        foreach($orderitems as $key => $item) {
+            // echo $item->article->farmer->id.'<br>';
+            if ($item->article->farmer->id != $farmerid) {
+                $orderitems->forget($key);
+            }
+            
+        }
+        foreach($orderitems as $oi) {
+            $total+=$item->quantity*$item->price;
+        }
+        
+        //$orderitems->forget(0);
+        // dd($total);
+
+        return view('farmer.order.show',compact('order','orderitems','total'));
     }
 
     /**

@@ -4,16 +4,13 @@
 <div class="container">
     <div class="row">
     <div class="col-12">
-      <div id="form_result"></div>
+      <h1>Zamówienia</h1>
     </div>
     </div>
     <div class="row">
       <div class="col-12">
-        <div class="card">
-        <div class="card-header">
-        <h3 class="card-title">Zamówienia</h3>
-        </div>
-          <div class="card-body">
+        
+          
              
             <!--<p class="card-text">Text</p> -->
             
@@ -28,27 +25,28 @@
                 </div>
             @else
             <div class="list-group">
-              @foreach ($orders as $order)
-            <a href="#" class="list-group-item list-group-item-action">{{$order->name}} <span class="badge badge-primary">{{$order->total_quantity}} {{$order->unit}}</span></a>
+              @foreach ($orders_report as $raport)
+            <a href="#" class="list-group-item list-group-item-action">{{$raport->name}} <span class="badge badge-primary">{{$raport->total_quantity}} {{$raport->unit}}</span></a>
               @endforeach
             </div>
 
                     <table class="display table table-bordered table-hover dataTable">
                        <thead>
                            <tr>
-                               <th>ID</th>
-                               <th>Nazwa produktu</th>
-                               <th>Cena jedn.</th>
-                               <th>Ilość</th>
+                               <th>ID zam.</th>
+                               <th>Wartość</th>
+                               <th>Data zamówienia</th>
+                               <th>Opcje</th>
                            </tr>
                         </thead>
                         <tbody>
                             @foreach ($orders as $order)
                                 <tr>
-                                <td>{{$order->id }}</td>
-                                <td>{{$order->name}}</td>
-                                <td>{{$order->price}}</td>
-                                <td>{{$order->quantity}}</td>
+                                <td><a href="{{route('farmer.order.show',$order->id)}}">{{$order->id }}</a></td>
+                                <td>{{$order->value}}</td>
+                                {{-- <td>{{$order->created_at }}</td> --}}
+                                <td>{{\Carbon\Carbon::parse($order->created_at)->format('Y-m-d') }}</td>
+                                
                                 {{-- <td>
                                     <div class="float-right">
                                         
@@ -62,10 +60,7 @@
                             @endforeach
                         </tbody>
                     </table>
-            @endif
-
-          </div>
-        </div>
+            @endif 
       </div>
     </div>
 </div>

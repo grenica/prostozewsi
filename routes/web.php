@@ -39,8 +39,10 @@ Route::group(['middleware' => ['auth']], function () {
            Route::resource('/market', 'Admin\MarketController',['as' => 'admin']);
            Route::resource('/category', 'Admin\CategoryController',['as' => 'admin']);
            Route::resource('/feature', 'Admin\FeatureController',['as' => 'admin']);
-          // Route::resource('/payment', 'Admin\PaymentController',['as' => 'admin']);
-          // Route::resource('/article', 'Admin\ArticleController',['as' => 'admin']);
+           Route::resource('/farmer', 'Admin\FarmerController',['as' => 'admin']);
+           Route::resource('/clients', 'Admin\ClientController',['as' => 'admin']);
+           Route::resource('/payment', 'Admin\PaymentController',['as' => 'admin']);
+            Route::resource('/article', 'Admin\ArticleController',['as' => 'admin']);
          //  Route::resource('/image', 'Admin\ArticleimageController',['as' => 'admin']);
         });
     });
@@ -55,6 +57,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('/order', 'Farmer\OrderController',['as'=>'farmer']);
             Route::resource('/market', 'Farmer\MarketController',['as'=>'farmer']);
             Route::resource('/article', 'Farmer\ArticleController',['as'=>'farmer']);
+            Route::get('/history', 'Farmer\HistoryOrderController@index')->name('history');
+            Route::get('/history3', 'Farmer\HistoryOrderController@index3')->name('history3');
+            Route::get('/stat', 'Farmer\StatisticController@index')->name('stat');
          //   Route::resource('/artimages/{idarticle}', 'Farmer\ArticleImagesController',['as'=>'farmer']);
            Route::get('/artimages/{id}/create','Farmer\ArticleImagesController@create')->name('farmer.artimages.create');
            Route::post('/artimages','Farmer\ArticleImagesController@store')->name('farmer.artimages.store');
