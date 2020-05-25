@@ -29,9 +29,10 @@ export default {
     // mounted: function(){
     //     console.log('mouted w App');
     // },
-    // created: function() {
-    //     console.log('created w App');
-    // }
+    created: function() {
+        // console.log('created w App');
+        this.$store.dispatch('setMyMarket');
+    }
     // created() {
     //     axios.defaults.headers.common["Authorization"] = "Bearer "+localStorage.getItem("token");
     //     this.$store.dispatch('getUser');

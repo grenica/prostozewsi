@@ -7,7 +7,7 @@
           <div class="card-body d-flex justify-content-between align-items-center">
             <div>
               <p class="card-text">Nowe Zamówienia</p>
-            <h4 class="card-title">{{ $lastEarn->countOrders}} / {{$lastEarn->lastEarn }} zł</h4>
+            {{-- <h4 class="card-title">{{ $lastEarn->countOrders}} / {{$lastEarn->lastEarn }} zł</h4> --}}
             </div>
              <i class="icofont-money icofont-4x"></i>
           </div>

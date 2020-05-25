@@ -72,7 +72,38 @@ class FarmerController extends Controller
             'region_id' => 'required'
           
         ]);
-        $request->user()->farmer()->create($request->all());
+        if($request->hasFile('image')) {
+            $file = $request->file('image');
+            //$fileNameOrig = 'farmer-'.time().'.'.$file->getClientOriginalExtension();
+            $fileName = 'farmer-'.time();
+            $filenameExt = $fileName.'.webp';
+            $filenamejpg = 'farmer-'.time().'.jpg';
+            //zapisuje jako WebP
+            $file->storeAs('rolnicy',$filenameExt,'public');
+            // zapisuje jako JPG
+            $file->storeAs('rolnicy',$filenamejpg,'public');
+
+            // zmiana wymiaru
+            $destinationPath = public_path('storage/rolnicy/thumbnail');
+            //zakładam katalog i nadaje mu prawa do zapisu // nie działa SPRAWDZ
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 666, true);
+            }
+
+            Image::make($file->getRealPath())->resize(150, 150, function ($constraint) {
+            $constraint->aspectRatio();
+            })
+            // ->insert($watermark, 'center')
+            ->save($destinationPath.'/'.$filenameExt)
+            ->save($destinationPath.'/'.$filenamejpg);
+        }
+        
+        // dd($request);
+
+        $data = $request->all();
+        //podmieniam z file na swoją nazwę
+        $data['image'] = $fileName;
+        $request->user()->farmer()->create($data);
         return redirect()->route('farmer.profil.index');
     }
 

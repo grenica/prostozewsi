@@ -10,8 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script> --}}
+    <script src="{{ asset('js/app.js') }}" ></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -49,9 +49,12 @@
         <ul class="lista">
             <li><h4>Użytkownicy</h4>
             <ul>
-                <li><a href="{{ url('/admin/user')}}">Użytkownicy</a></li>
-                <li><a href="{{ route('admin.clients.index') }}">Klienci</a></li>
-                <li><a href="{{ route('admin.farmer.index') }}">Rolnicy</a></li>
+                <li><a href="{{ url('/admin/user')}}"><i class="icofont-user icofont-2x"></i>Użytkownicy</a></li>
+                <li><a href="{{ route('admin.clients.index') }}"><i class="icofont-people icofont-2x"></i>Klienci</a></li>
+                <li><a href="{{ route('admin.farmer.index') }}"><i class="icofont-farmer-alt icofont-2x"></i>Rolnicy</a></li>
+                <li><a href="{{ route('admin.articles.index') }}"><i class="icofont-fruits icofont-2x"></i>Towary</a></li>
+                <li><a href="{{ route('admin.payment.index') }}"><i class="icofont-money-bag icofont-2x"></i>Płatności</a></li>
+                <li><a href="{{ route('admin.report') }}"><i class="icofont-chart-bar-graph icofont-2x"></i>Raporty</a></li>
             </ul>
             </li>
             
@@ -62,6 +65,7 @@
                     <li><a href="{{ route('admin.plan.index') }}">Plany</a></li>
                     <li><a href="{{ route('admin.feature.index') }}">Cechy produktów</a></li>
                     <li><a href="{{ route('admin.unit.index') }}">Jednostki</a></li>
+                    <li><a href="{{ route('admin.roles.index') }}">Role</a></li>
                 </ul>
         </li>
             
@@ -70,19 +74,23 @@
    </aside>
    <main class="app_page">
         <div class="navbar">
-            navbar
+            <span>Navbar</span>
+            <a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
+        <a href="{{ route('logout')}}" data-toggle="tooltip" data-placement="bottom" title="Wyloguj"><i class="icofont-power icofont-2x"></i></a>
         </div>
         <div class="dashboard">
             @yield('content')
         </div>
    </main>
-   <script>
+   {{-- <script>
     $(document).ready(function() {
         //bo sa załadowane róznwe wersje jQuery
         $.noConflict();
         
     });
-</script>
-   @yield('js')
+</script> --}}
+@yield('js')
+{{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+   
 </body>
 </html>

@@ -26,7 +26,7 @@
          </div>
          <div class="infouser">
            <div class="image">
-             <img src="{{$farmer->image}}"/>
+             <img src="{{ asset('/storage/rolnicy/'.$farmer->image.'.webp') }}"/>
            </div>
            <div class="info container">
               <div class="row">

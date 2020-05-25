@@ -26,8 +26,9 @@ class DashboardController extends Controller
         }
         $articles=$authuser->farmer->articles;
         // dd(Carbon::now()->subDays(9)->format('Y-m-d'));
-        $lastEarn = $this->lastEarnings($authuser)[0];
+        // $lastEarn = $this->lastEarnings($authuser)[0];
         // dd($lastEarn);
+        
         $allClients = $this->allClients($authuser);
         // dd($allClients);
         $bs = $this->bestsellers($authuser);
@@ -43,7 +44,8 @@ class DashboardController extends Controller
                 // ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('farmer.dashboard.index',compact('articles','lastEarn','allClients','bs'));
+        // ,'lastEarn'
+        return view('farmer.dashboard.index',compact('articles','allClients','bs'));
     }
     private function lastEarnings($user) {
         //zysk z zamowień 10 dni wstecz

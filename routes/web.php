@@ -31,19 +31,22 @@ Route::group(['middleware' => ['auth']], function () {
     /* strefa tylko ADMIN */
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/admin','Admin\AdminController@index')->name('admin');
+        Route::get('/report','Admin\ReportController@index')->name('admin.report');
         // Route::resource('/unit', 'Admin\UnitController');
         Route::group(['prefix'=>'admin'], function () {
             Route::resource('/unit', 'Admin\UnitController',['as' =>'admin']);
            // Route::resource('/', 'Admin\AdminDashboardController',['as' =>'admin']);
            Route::resource('/plan', 'Admin\PlanController',['as' => 'admin']);
+           Route::resource('/user', 'Admin\UserController',['as' => 'admin']);
            Route::resource('/market', 'Admin\MarketController',['as' => 'admin']);
            Route::resource('/category', 'Admin\CategoryController',['as' => 'admin']);
            Route::resource('/feature', 'Admin\FeatureController',['as' => 'admin']);
            Route::resource('/farmer', 'Admin\FarmerController',['as' => 'admin']);
            Route::resource('/clients', 'Admin\ClientController',['as' => 'admin']);
            Route::resource('/payment', 'Admin\PaymentController',['as' => 'admin']);
-            Route::resource('/article', 'Admin\ArticleController',['as' => 'admin']);
-         //  Route::resource('/image', 'Admin\ArticleimageController',['as' => 'admin']);
+            Route::resource('/articles', 'Admin\ArticleController',['as' => 'admin']);
+            Route::resource('/roles', 'Admin\RoleController',['as' => 'admin']);
+           //Route::resource('/images', 'Admin\ArticleimageController',['as' => 'admin']);
         });
     });
     /* strefa tylko FARMER */

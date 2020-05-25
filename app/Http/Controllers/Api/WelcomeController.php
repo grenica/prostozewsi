@@ -16,7 +16,7 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function news($id)
+    public function news_main($id)
     {
         $tab = array();
 

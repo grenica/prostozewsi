@@ -25,7 +25,7 @@
                     Brak rekordów !!!
                 </div>
             @else
-                    <table class="display table table-bordered table-hover dataTable">
+                    <table class="display table table-bordered table-hover">
                        <thead>
                            <tr>
                                <th>ID</th>

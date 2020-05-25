@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ClientController extends Controller
 {
@@ -13,9 +14,20 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $clients = Client::latest()->get();
+        // dd($clients);
+        if ($request->ajax()) {
+            return DataTables::of($clients)
+            ->addColumn('action', function($row){
+                return $row->user->name;
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+        return view('admin.client.index',compact('clients'));
     }
 
     /**

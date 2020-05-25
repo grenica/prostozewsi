@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    {!! Form::open(array('route'=>'farmer.profil.store')) !!}
+                    {!! Form::open(array('route'=>'farmer.profil.store','files'=>'true')) !!}
                         @include('farmer.profil._form')
                     {!! Form::close() !!}
 

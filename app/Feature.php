@@ -13,7 +13,8 @@ class Feature extends Model
 
 
     public function articles () {
-        //return $this->belongsToMany(Article::class);
-        return $this->belongsTo(Article::class);
+        // wiele do wiele
+        return $this->belongsToMany(Article::class);
+        // return $this->belongsTo(Article::class);
     }
 }

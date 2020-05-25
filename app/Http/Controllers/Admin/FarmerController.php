@@ -22,6 +22,10 @@ class FarmerController extends Controller
         // dd($farmers);
         if ($request->ajax()) {
             return DataTables::of($farmers)
+            ->addColumn('namelink', function ($farmer) {
+                return '<a href="' . route('admin.farmer.show', $farmer->id) .'">'.$farmer->name.'</a>'; 
+            })
+            ->rawColumns(['namelink'])
             ->addIndexColumn()
             ->make(true);
         }
@@ -57,7 +61,14 @@ class FarmerController extends Controller
      */
     public function show(Farmer $farmer)
     {
-        //
+        $articles=$farmer->articles;
+        $active = 0;
+        $lastPayment = $farmer->payments()->latest()->first();
+        if($lastPayment->stopdata > Carbon::today()) {
+            $active = 1;
+        }
+        //,'lastPayment','active'
+        return view('admin.farmer.show',compact('farmer','articles','active'));
     }
 
     /**

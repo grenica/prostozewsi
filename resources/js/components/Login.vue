@@ -1,7 +1,7 @@
 <template>
     <div class="login_wrapper">
-        <router-link v-if="!isLoggedIn" :to="{ name:'login2'}">Loguj</router-link>
-        <a href="#" v-if="isLoggedIn" @click="logout">Wyloguj</a>
+        <router-link class="store_link" v-if="!isLoggedIn" :to="{ name:'login2'}">Loguj</router-link>
+        <a href="#" class="store_link" v-if="isLoggedIn" @click="logout">Wyloguj</a>
     </div>
 </template>
 <script>

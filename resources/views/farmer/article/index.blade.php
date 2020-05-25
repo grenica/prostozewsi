@@ -29,7 +29,7 @@
                     Brak rekordów !!!
                 </div>
             @else
-                    <table class="display table table-bordered table-hover dataTable">
+                    <table class="display table table-bordered table-hover">
                        <thead>
                            <tr>
                                <th>ID</th>
@@ -43,8 +43,8 @@
                                 <td><a href="{{ route('farmer.article.show',$myarticle->id)}}">{{$myarticle->name }}</a> </td>
                                 <td>
                                     <div class="float-right">
-                                        
-                                <a class="btn btn-outline-info edit" data-id="{{ $myarticle->id }}"><i class="icofont-ui-edit"></i></a>                               
+                                    <a href="{{ route('farmer.article.edit',$myarticle->id)}}" class="btn btn-outline-info"><i class="icofont-ui-edit"></i></a>   
+                                {{-- <a class="btn btn-outline-info edit" data-id="{{ $myarticle->id }}"><i class="icofont-ui-edit"></i></a> --}}
                                 {!! Form::model($myarticle,array('route'=>['farmer.article.destroy',$myarticle],'method'=>'DELETE','class'=>'d-inline')) !!}
                                 {!! Form::button('<i class="icofont-ui-delete"></i>',['type'=>'submit','class'=>'btn btn-sm btn-outline-danger  clearfix'])  !!}
                                 {!! Form::close() !!}
@@ -263,9 +263,9 @@ $(document).ready(function() {
   // edycja
   $('.edit').click(function() {
     var id = $(this).attr('data-id');
-    //console.log(id);
+    console.log(id);
     $.ajax({
-      url: "/farmer/article/"+id+"/edit",
+      url: "/farmer/articles/"+id+"/edit",
       dataType:"json",
       success: function(data) {
           $('#name').val(data.result.name);

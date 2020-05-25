@@ -61,11 +61,13 @@ class ArticleController extends Controller
         ]);
         $authuser = Auth::user();
         $features= $request->feature;
-       // dd($features);
-        $authuser->farmer()->first()->articles()->create($request->all());
+    //    dd($features);
+        $article = $authuser->farmer()->first()->articles()->create($request->all());
         //dodaje cechy do artykułu
+        // dd($features);
+        $article->features()->attach($features);
        // $authuser->farmer()->first()->articles()->features()->first()->attach($features);
-        return redirect()->route('farmer.artimages.create');
+        return redirect()->route('farmer.artimages.create',$article->id);
     }
 
     /**
@@ -98,9 +100,28 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        $unit = $article->unit;
+        $unitsAll = Unit::pluck('name','id');
+        $featuresAll = Feature::all();//pluck('name','id');
+        $features = $article->features;
+        $ftab =[];
+        //przepisuje z obiektu do tablicy
+        foreach($features as $f) {
+            $ftab[]= $f->id;
+        }
+        foreach($featuresAll as $f_all) {
+            if(in_array($f_all->id,$ftab)) {
+                $f_all->checked = true;
+            } else {
+                $f_all->checked = false;
+            }
+           
+        }
+        //    dd($featuresAll); 
+        //  dd($features);
+        return view('farmer.article.edit',compact('article','unit','unitsAll','featuresAll'));
     }
 
     /**
@@ -112,7 +133,14 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+        $article = Article::findOrFail($request->hidden_id);
+        // $featuresAll = Feature::all();
+        // $features_relation = 
+        // $feature = $request->feature;
+        $article->features()->sync($request->feature);
+        $article->update($request->all());
+        return redirect()->route('farmer.article.index');
     }
 
     /**
@@ -123,7 +151,26 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::find($id);
+        $images = $article->articleimages;
+        $features = $article->features;
+        // dd($features);
+        //odpidam zależne cechy produktu
+        $article->features()->detach($features);
+        
+        // uswam pliki obrazków
+        foreach($images as $img) {
+            $file1 = '../../../../storage/app/public/produkty/'.$img.'.webp';
+            $file2 = '../../../../storage/app/public/produkty/'.$img.'.jpg';
+            if(Storage::exists($file1) || Storage::exists($file2)) {
+                Storage::delete($file1);
+                Storage::delete($file2);
+            }
+            //usuwam z bazy
+            $img->delete();
+        }
+        $article->delete();
+        return redirect()->route('farmer.article.index')->with('status','Pozycja została usunięta !!');
     }
     public function ajax_category(Request $request) {
         if($request->ajax()) {

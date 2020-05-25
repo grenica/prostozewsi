@@ -15,8 +15,9 @@ export const store =  new Vuex.Store({
        // isLoggedIn: false,
     //    market: {},
        marketID: null,
+       marketslug: null,
        products: [],
-       productsNew: [],
+    //    productsNew: [],
        cart: []
     },
     getters: {   // = computed properties
@@ -137,8 +138,9 @@ export const store =  new Vuex.Store({
         setMarket(state) {
             //biorę obiekt market z cookie
             let cookie = Cookies.get('market');
-            //state.market = cookie;
-            state.marketID = JSON.parse(cookie).id;
+            
+            // state.marketID = JSON.parse(cookie).id;
+            state.marketslug = JSON.parse(cookie).name.replace(' ','-');
         }
 
     },
@@ -149,6 +151,9 @@ export const store =  new Vuex.Store({
         //         commit('setUser',response.data );
         //     });
         // },
+        setMyMarket({commit}) {
+            commit('setMarket');
+        },
         loginus({commit},user) {
             commit('setUser',user);
            // this.$router.push({ name: 'category', params: { id: '1' } });
@@ -189,10 +194,22 @@ export const store =  new Vuex.Store({
         fetchProductsNews({commit}) {
             let cookie = Cookies.get('market');
             let marketID = JSON.parse(cookie).id;
-            axios.get('/api/news/'+marketID)
+            axios.get('/api/news_main/'+marketID)
             .then(
                 response => {
                    // commit('setProductsNews',response.data);
+                    commit('setProducts',response.data);
+                }
+            ); 
+        },
+        fetchProductsNewsAll({commit}) {
+            // let cookie = Cookies.get('market');
+            // let marketID = JSON.parse(cookie).id;
+            console.log('fetchProductsNewsAll');
+            
+            axios.get('/api/'+this.state.marketslug+'/news')
+            .then(
+                response => {
                     commit('setProducts',response.data);
                 }
             ); 
@@ -251,7 +268,7 @@ export const store =  new Vuex.Store({
             //const productItem = this.state.products.find(item => item.id === productId);
             commit('removeItem',productId);
         },
-
+        
         // order({commit}) {
         //     axios.post('/api/order',{
         //         user: 8, 

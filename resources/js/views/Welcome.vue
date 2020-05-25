@@ -2,18 +2,20 @@
     <div>
         <h1>Strona startowa</h1>
         <!-- <router-link to="/about">O nas</router-link> -->
-        <News />
-        <!-- <passport-authorized-clients></passport-authorized-clients> -->
+        <NewsMain />
+        
     </div>
     
 </template>
 
 <script>
-// import CategoryList from '../components/CategoryList.vue'
-import News from '../components/News.vue';
+
+// import News from '../components/News.vue';
+import NewsMain from '../components/NewsMain.vue';
 export default {
     components: {
-        News,       
+        // News,    
+        NewsMain,
     },
     // data() {
     //     return {

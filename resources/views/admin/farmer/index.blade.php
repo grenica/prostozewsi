@@ -40,7 +40,9 @@ $(document).ready(function() {
             ajax: "{{ route('admin.farmer.index') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
+                // {data: 'name', name: 'name'},
+                {data: 'namelink', name: 'namelink', orderable: false, searchable: 
+        false},
                 {data: 'city', name: 'city'},
                 {data: 'phone', name: 'phone'},
                 // {data: 'region_id', name: 'region_id'},

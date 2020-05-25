@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ArticleController extends Controller
 {
@@ -13,9 +14,19 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $articles = Article::latest()->get();
+        // dd($farmers);
+        if ($request->ajax()) {
+            return DataTables::of($articles)
+            ->addColumn('category', function($row){
+                return $row->category->name;
+            })
+            ->rawColumns(['category'])
+            ->make(true);
+        }
+        return view('admin.article.index',compact('articles'));
     }
 
     /**

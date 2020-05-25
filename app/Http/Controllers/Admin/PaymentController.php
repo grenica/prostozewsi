@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Payment;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class PaymentController extends Controller
 {
@@ -13,9 +14,20 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $pay = Payment::latest()->get();
+        // dd($clients);
+        if ($request->ajax()) {
+            return DataTables::of($pay)
+            ->addColumn('farmer', function($row){
+                return $row->farmer->name;
+            })
+            ->rawColumns(['farmer'])
+            // ->addIndexColumn()
+            ->make(true);
+        }
+        return view('admin.payment.index',compact('pay'));
     }
 
     /**

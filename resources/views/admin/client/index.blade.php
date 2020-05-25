@@ -14,10 +14,11 @@
                     <tr>
                         <th>#</th>
                         {{-- <th>User</th> --}}
-                        <th>Nazwa</th>
+                        
                         <th>Miejscowosc</th>
                         <th>Tel</th>
-                        {{-- <th>Woj.</th> --}}
+                        {{-- <th>Tel</th> --}}
+                        <th>User name</th>
                         <th>Data dodania</th>
                     </tr>
                     </thead>
@@ -37,13 +38,14 @@ $(document).ready(function() {
     $('#dataTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.farmer.index') }}",
+            ajax: "{{ route('admin.clients.index') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
+                
                 {data: 'city', name: 'city'},
                 {data: 'phone', name: 'phone'},
-                // {data: 'region_id', name: 'region_id'},
+                // {data: 'phone', name: 'phone'},
+                {data: 'action', name: 'action'},
                 {data: 'created_at', name: 'created_at'},
                 // {data: 'action', name: 'action', orderable: false, searchable: false},
             ]

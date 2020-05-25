@@ -49,11 +49,26 @@ const routes = [
         name: 'thanks',
         component: () => import('./views/Thanks.vue')
     },
-    // {
-    //     path: '/logout',
-    //     name: 'logout',
-    //     component: Logout
-    // }
+    {
+        path: '/news',
+        name: 'news',
+        component: () => import('./views/News.vue')
+    },
+    {
+        path: '/bestsellers',
+        name: 'bestsellers',
+        component: () => import('./views/Bestsellers.vue')
+    },
+    {
+        path: '/promotions',
+        name: 'promotions',
+        component: () => import('./views/Promotions.vue')
+    },
+    {
+        path: '/logout',
+        name: 'logout',
+        component: Logout
+    }
 ];
 
 

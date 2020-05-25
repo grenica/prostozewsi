@@ -30,8 +30,9 @@ class Article extends Model
     }
 
     public function features() {
-      //  return $this->belongsToMany(Feature::class);
-        return $this->hasMany(Feature::class);
+        //wiele to wiele
+       return $this->belongsToMany(Feature::class);
+        // return $this->hasMany(Feature::class);
     }
     public function orderItem() {
        

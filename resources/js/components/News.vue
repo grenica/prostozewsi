@@ -1,12 +1,12 @@
 <template>
     <div class="article-list">
-       <h3>Nowości <span class="badge badge-secondary">New</span></h3>
+       <!-- <h3>Nowości <span class="badge badge-secondary">New</span></h3> -->
         <div v-for="item in products" v-bind:key="item.id" class="item_pos">
             <router-link :to="{ name:'product', params:{id:item.id}}" >
                 <!-- <div v-for="img in item.images" v-bind:key="img.id">
                     <img v-if="img.isdefault" v-bind:src="'/storage/produkty/'+ img.image" />
                 </div> -->
-               <img v-bind:src="'/storage/produkty/'+ item.image" /> 
+               <img class="card_img" v-bind:src="'/storage/produkty/'+ item.image+'.webp'" /> 
             </router-link>
             <p class="farmer">{{ item.FarmerName }}</p>
             

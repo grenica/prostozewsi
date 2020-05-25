@@ -4,12 +4,12 @@
         <div class="product_info" v-if="product">
             <div v-if="product.images  && sortedProductImages.length > 1" class="product_images">
                     <!-- <div v-if="sortedProductImages.length > 1" class="product_images"> -->
-                        <img v-for="(p,index) in sortedProductImages" :key="index" v-bind:src="'/storage/produkty/'+p.image" @mouseover="hover(index)" />
+                        <img v-for="(p,index) in sortedProductImages" :key="index" v-bind:src="'/storage/produkty/thumbnail/'+p.image+'.webp'" @mouseover="hover(index)" />
                     <!-- </div> -->
             </div>
             <!-- <div v-if="product.images"> -->
             <div  v-if="product.images" class="product_preview">
-                <img v-for="(p,index) in sortedProductImages" :key="index" v-bind:src="'/storage/produkty/'+p.image" v-bind:class="{active: index === ActiveItem }" />
+                <img v-for="(p,index) in sortedProductImages" :key="index" v-bind:src="'/storage/produkty/'+p.image+'.webp'" v-bind:class="{active: index === ActiveItem }" />
             </div>
                 <!-- </div> -->
             <!-- <div class="image_container"> -->
@@ -29,8 +29,8 @@
             <!-- </div> -->
 
             <div class="product_title">
-                <router-link :to="{name:'welcome'}">{{ product.FarmerName}}</router-link>
-                <h5 v-if="product">{{ product.name }}</h5>
+                <router-link :to="{name:'welcome'}" class="store_link">{{ product.FarmerName}}</router-link>
+                <h2 class="product_title_head" v-if="product">{{ product.name }}</h2>
                 <div class="price_info">
                     <span>{{product.price}} zł</span>/{{ product.Unit }}
                 </div>

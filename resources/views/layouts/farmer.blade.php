@@ -9,16 +9,14 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script> --}}
 
    <!-- Scripts -->
-   <script src="{{ asset('js/app.js') }}" defer></script>
+   <script src="{{ asset('js/app.js') }}"></script>
 
     {{-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> --}}
    
@@ -76,7 +74,8 @@
    {{-- <main class="app_page"> --}}
     <main class="container">
         <div class="navbar">
-            TODO
+            <h4>TODO</h4>
+            <a href="{{ route('logout')}}"><i class="icofont-power icofont-2x"></i></a>
         </div>
         {{-- <div class="dashboard"> --}}
         <div class="dashboard">
@@ -84,13 +83,13 @@
         </div>
    </main>
    
-   <script>
+   {{-- <script>
     $(document).ready(function() {
         //bo sa załadowane róznwe wersje jQuery
         $.noConflict();
         
     });
-</script>
+</script> --}}
    @yield('js')
 </body>
 

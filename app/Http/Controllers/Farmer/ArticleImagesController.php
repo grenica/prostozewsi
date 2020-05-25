@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Article;
-use app\Articleimage;
+use App\Articleimage;
+
 //use Image;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -63,12 +64,15 @@ class ArticleImagesController extends Controller
         //     //here you can define any directory name whatever you want, if dir is not exist it will created automatically.
         //     Storage::putFileAs('public/images/1/smalls/' . $image_name, (string)$image->encode('png', 95), $image_name);
         // }
-        
+         
         if($request->hasFile('file')) {
             $file = $request->file('file');
 
+            $fileName = 'art-'.time();
             // Generate a file name with extension
-            $fileName = 'prod-'.time().'.'.$file->getClientOriginalExtension();
+            $filenameExt = $fileName.'.webp';
+            $filenamejpg = $fileName.'.jpg';
+            // $fileName = 'art-'.time().'.'.$file->getClientOriginalExtension();
 
             // Save the file to storage
            // $path = $file->storeAs('public/products', $fileName);
@@ -80,16 +84,18 @@ class ArticleImagesController extends Controller
             // publicznie widoczny z localhost/storage/produkty/dsdjsdsj.jpg
             //$file->store('produkty','public');
             
-            $file->storeAs('produkty',$fileName,'public');
-
+            $file->storeAs('produkty',$filenameExt,'public');
+            $file->storeAs('produkty',$filenamejpg,'public');
+            
             // zmiana wymiary
             //$watermark = Image::make('images/watermark.png');
             $destinationPath = public_path('storage/produkty/thumbnail');
-            Image::make($file->getRealPath())->resize(200, 150, function ($constraint) {
+            Image::make($file->getRealPath())->resize(200, 200, function ($constraint) {
             $constraint->aspectRatio();
             })
             // ->insert($watermark, 'center')
-            ->save($destinationPath.'/'.$fileName);
+            ->save($destinationPath.'/'.$filenameExt)
+            ->save($destinationPath.'/'.$filenamejpg);
 
            // definiuje obiekt Articleimage
           // $artimg = new Articleimage();
@@ -145,6 +151,11 @@ class ArticleImagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $image = Articleimage::find($id);
+        Storage::delete(['public/produkty/'.$image->image.'.jpg','public/produkty/'.$image->image.'.webp']);
+        Storage::delete(['public/produkty/thumbnail/'.$image->image.'.jpg','public/produkty/thumbnail/'.$image->image.'.webp']);
+        $image->delete();
+        return redirect()->route('farmer.article.show',$image->article_id)->with('status','Obraz został usunięty');
     }
 }
