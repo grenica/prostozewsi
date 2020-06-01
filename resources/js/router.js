@@ -20,15 +20,16 @@ const routes = [
         component: () => import('./views/About.vue')
     },
     {
-        path: '/category/:id',
+        // path: '/category/:id',
+        path: '/category/:name',
         name: 'category',
         component: CategoryDetail
     },
-    {
-        path: '/farmer/:id',
-        name: 'farmer',
-        component: CategoryDetail
-    },
+    // {
+    //     path: '/farmer/:id',
+    //     name: 'farmer',
+    //     component: CategoryDetail
+    // },
     {
         path: '/login2',
         name: 'login2',
@@ -73,7 +74,8 @@ const routes = [
 
 
 const router = new VueRouter({
-    mode: 'history',
+    // mode: 'history',
+    // mode:'hash',
     routes: routes,
     //akywny link - dodaje klase 'active'
     linkActiveClass: 'active'

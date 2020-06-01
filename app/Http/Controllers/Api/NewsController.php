@@ -66,14 +66,20 @@ class NewsController extends Controller
              }
             //  dd($tab_features); 
              $tab_features_1=[];
+             $tab_category_1=[];
              //przepisuje do tablicy asoc
              foreach($tab_features as $k => $tf) {
-                 $tab_features_1[] = (object)['name'=>$k, 'count' => $tf];
-                 
+                 $tab_features_1[] = (object)['name'=>$k, 'count' => $tf];  
              }
+
+             foreach($tab_category as $k => $tf) {
+                $tab_category_1[] = (object)['name'=>$k, 'count' => $tf];  
+            }
+
             // dd($tab_features_1);
             // ,'category_list'=>$tab_category
-            return NewsResource::collection($a)->merge(['features_list'=> $tab_features_1]);
+            // return NewsResource::collection($a)->merge(['features_list'=> $tab_features_1,'category_list'=>$tab_category_1]);
+            return NewsResource::collection($a);
     }
 
     

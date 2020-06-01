@@ -18,7 +18,8 @@ use Illuminate\Http\Request;
 // });
 
 Route::get('/category','Api\CategoryController@index');
-Route::get('/category/{id}','Api\CategoryController@show');
+Route::get('{marketslug}/category/{id_category}','Api\CategoryController@show');
+Route::get('{marketslug}/farmer/{farmername}','Api\FarmerController@show');
 Route::get('/news_main/{id}','Api\WelcomeController@news_main'); // strona startowa - news (4 rekordy)
 Route::get('/bestsellers_main/{id}','Api\WelcomeController@bestsellers_main'); // strona startowa - Bestseller
 Route::get('/promotions_main/{id}','Api\WelcomeController@promotions_main'); // strona startowa - Bestseller 
@@ -29,6 +30,10 @@ Route::get('/promotions/{id}','Api\PromotionsController@index'); // strona Bests
 
 Route::post('/login_store','Api\AuthController@login');
 Route::post('/login2','Api\AuthController@login2');
+
+// fitry
+Route::get('{marketslug}/filter/news','Api\FilterController@news');
+Route::get('{marketslug}/filter/{id_category}','Api\FilterController@filterByCategory');
 
 Route::middleware('auth:api')->get('/current','Api\AuthController@currentUser');
 

@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\Resource;
 
-class NewsResource extends JsonResource
+class ProductByCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +14,7 @@ class NewsResource extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
+        // return parent::toArray($request);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -28,10 +27,11 @@ class NewsResource extends JsonResource
             'farmer' => new  FarmerResource($this->farmer),
             'category' => $this->category,
             'category' => new CategoryResource($this->category),
-            'images' => $this->articleimages,
+             'images' => $this->articleimages,
+            // 'images' => new ImagesResource($this->articleimages),
             'features'=> $this->features,
+            // 'features'=> new FeaturesResource($this->features),
             
         ];
     }
-    
 }

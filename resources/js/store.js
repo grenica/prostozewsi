@@ -18,7 +18,10 @@ export const store =  new Vuex.Store({
        marketslug: null,
        products: [],
     //    productsNew: [],
-       cart: []
+       cart: [],
+       filters: [],
+       categories:[],
+       meta: {},
     },
     getters: {   // = computed properties
         isLoggedIn(state) {
@@ -81,6 +84,15 @@ export const store =  new Vuex.Store({
         },
         setProducts(state,products) {
             state.products = products;
+        },
+        setMeta(state,meta) {
+            state.meta = meta;
+        },
+        setCategories(state,cat) {
+            state.categories = cat;
+        },
+        setFilter(state,filters) {
+            state.filters = filters;
         },
         setProductsNews(state,products) {
             state.productsNew=products;
@@ -210,9 +222,46 @@ export const store =  new Vuex.Store({
             axios.get('/api/'+this.state.marketslug+'/news')
             .then(
                 response => {
-                    commit('setProducts',response.data);
+                    //zamieniam pobrany objekt na tablicę
+                    // commit('setProducts',Object.entries(response.data));
+                    commit('setProducts',response.data["data"]);
+                    commit('setMeta',response.data["meta"]);
                 }
-            ); 
+            );
+        },
+        fetchProductsByCategory({commit},category) {
+            // console.log(category);
+            const categoryItem = this.state.categories.find(item => item.name === category);
+            console.log('categoryItem:  '+categoryItem.name+ 'ID: '+categoryItem.id);
+
+            axios.get('/api/'+this.state.marketslug+'/category/'+categoryItem.id)
+            .then(
+                response => {
+                    //zamieniam pobrany objekt na tablicę
+                    // commit('setProducts',Object.entries(response.data));
+                    commit('setProducts',response.data["data"]);
+                    commit('setMeta',response.data["meta"]);
+                }
+            )
+            .catch(function (error) {
+                console.log('Error:  '+error);
+            });
+        },
+        fetchFilter({commit}) {
+            axios.get('/api/'+this.state.marketslug+'/filter/news')
+            .then(
+                response => {
+                    commit('setFilter',response.data);
+                }
+            );
+        },
+        fetchCategories({commit}) {
+            axios.get('/api/category')
+            .then(
+                response => {
+                    commit('setCategories',response.data);
+                }
+            );
         },
         addToCart(context,product) {
             //find cart
