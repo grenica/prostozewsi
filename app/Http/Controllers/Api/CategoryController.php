@@ -70,7 +70,7 @@ class CategoryController extends Controller
     //        $q -> where('name','=','Warzywniak');
     //    }])->paginate(16);
        $a = Article::whereIntegerInRaw('farmer_id',$tab)->whereHas('category', function($q){
-            $q->where('id', '=', $this->id_category );  //  'Mięso'
+            $q->where('parent_id', '=', $this->id_category );  //  'Mięso'
         })->paginate(16);
 
         // dd($a); //$this->categoryname

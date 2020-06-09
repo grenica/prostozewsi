@@ -1,10 +1,10 @@
 <template>
-<div>
+<div class="cat">
     <!-- <h1>Kategorie </h1> -->
     <!-- <p>{{this.joke}}</p> -->
     <!-- <div class="cat"> -->
         
-        <ul class="cat">
+        <ul>
             <li v-for="category in categories" :key="category.id" >
                 <!-- <router-link class="strong store_link" :to="{ name:'category', params:{id:category.id} }">{{ category.name }}</router-link> -->
                 <router-link class="strong store_link" :to="{ name:'category', params:{name:category.name} }">{{ category.name }}</router-link>

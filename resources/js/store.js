@@ -231,6 +231,7 @@ export const store =  new Vuex.Store({
         },
         fetchProductsByCategory({commit},category) {
             // console.log(category);
+            // $this.state.filters=[];
             const categoryItem = this.state.categories.find(item => item.name === category);
             console.log('categoryItem:  '+categoryItem.name+ 'ID: '+categoryItem.id);
 
@@ -246,6 +247,13 @@ export const store =  new Vuex.Store({
             .catch(function (error) {
                 console.log('Error:  '+error);
             });
+            //odpytuje API - Filter
+            axios.get('/api/'+this.state.marketslug+'/filter/'+categoryItem.id)
+            .then(
+                response => {
+                    commit('setFilter',response.data);
+                }
+            );
         },
         fetchFilter({commit}) {
             axios.get('/api/'+this.state.marketslug+'/filter/news')

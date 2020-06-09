@@ -4,12 +4,12 @@
         <div class="product_info" v-if="product">
             <div v-if="product.images  && sortedProductImages.length > 1" class="product_images">
                     <!-- <div v-if="sortedProductImages.length > 1" class="product_images"> -->
-                        <img v-for="(p,index) in sortedProductImages" :key="index" v-bind:src="'/storage/produkty/thumbnail/'+p.image+'.webp'" @mouseover="hover(index)" />
+                        <img v-for="(p,index) in sortedProductImages" :key="index" v-bind:src="'/storage/produkty/thumbnail/'+p.image+'.webp'" @click="setActive(index)" v-bind:class="{active: index === ActiveItem}" /> <!--@mouseover="hover(index)" -->
                     <!-- </div> -->
             </div>
             <!-- <div v-if="product.images"> -->
             <div  v-if="product.images" class="product_preview">
-                <img v-for="(p,index) in sortedProductImages" :key="index" v-bind:src="'/storage/produkty/'+p.image+'.webp'" v-bind:class="{active: index === ActiveItem }" />
+                <img v-for="(p,index) in sortedProductImages" :key="index" v-bind:src="'/storage/produkty/'+p.image+'.webp'" v-bind:class="{active: index === ActiveItem}" /> <!--v-bind:class="{active: index === ActiveItem }" -->
             </div>
                 <!-- </div> -->
             <!-- <div class="image_container"> -->
@@ -64,6 +64,7 @@ export default {
         //let param = this.$route.params.id;
         console.log("Product - fetchProduct"+ this.prodID);
         this.$store.dispatch('fetchProduct',this.prodID);
+        this.ActiveItem = this.prodID;
     },
     computed: {
         product() {
@@ -109,10 +110,33 @@ export default {
         
     },
     methods: {
-        hover(index) {
+        // hover(index) {
+        //     this.ActiveItem = index;
+        //     console.log("hover: "+index);
+        // }
+        setActive(index) {
             this.ActiveItem = index;
-            console.log("hover: "+index);
         }
     }
 }
 </script>
+<style lang="scss">
+.product_preview {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    .active { z-index: 10;}
+    img {
+        width: 100%;
+        grid-row: 1;
+        grid-column: 1 / 2;
+    }
+}
+@media screen and (min-width:768px) {
+    .product_container .product_info {
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr auto 1fr;
+        grid-column-gap: 5px;
+    }
+}
+</style>

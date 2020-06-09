@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <h1>Tu nowości</h1>
-        <div class="filter">
+    <div class="category_wrapper">
+        <!-- <h1>Tu nowości</h1> -->
+        <div class="filters">
             <Filters />
         </div>
         <div>

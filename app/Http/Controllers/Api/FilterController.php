@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Article;
+use App\Market;
 
 class FilterController extends Controller
 {
@@ -40,28 +41,30 @@ class FilterController extends Controller
 
         $this->id_category = $id_category;
         $marketname=str_replace('-',' ',$marketslug);
-        $activeFarmers = DB::table('farmers')
-        ->join('farmer_market','farmers.id','=','farmer_market.farmer_id')
-        ->join('payments','payments.farmer_id','=','farmers.id')
-        ->join('markets','markets.id','farmer_market.market_id')
-        ->select('farmers.id',DB::raw('MAX(payments.id) as max_id'))
-        ->where('markets.name',$marketname)
+        $market = Market::where('name',$marketname)->first();
+        // dd($market);
+        $categories = DB::table('categories')
+        ->join('articles','articles.category_id','categories.id')
+        ->join('farmers','farmers.id','articles.farmer_id')
+        ->join('payments','payments.farmer_id','farmers.id')
+        ->join('farmer_market','farmer_market.farmer_id','farmers.id')
+        ->select('categories.name')
+        ->distinct('categories.name')
+        ->where('farmer_market.market_id',$market->id)
         ->where('payments.ispaid',1)
-        ->where('payments.stopdata','>',Carbon::now()->isoFormat('YYYY-MM-DD'))
-        ->groupBy('payments.farmer_id')
+        ->where('categories.parent_id',$id_category)
+        ->whereDate('payments.stopdata','>',Carbon::now()->isoFormat('YYYY-MM-DD'))
+
         // ->havingRaw('max(payments.stopdata) > ?',[Carbon::now()->isoFormat('YYYY-MM-DD')])
         ->get();
-        $tab=array();
+        // dd($categories);
+       
 
-        //przepisuje wynik(ID) do tablicy
-        foreach($activeFarmers as $af) {
-            $tab[] = $af->id;
-        }
     //    dd($tab);
-       $a = Article::whereIntegerInRaw('farmer_id',$tab)->whereHas('category', function($q){
-        $q->where('id', '=', $this->id_category );  //  'Mięso'
-        })->get();
-        dd($a);
-        return $activeFarmers;
+    //    $a = Article::whereIntegerInRaw('farmer_id',$tab)->whereHas('category', function($q){
+    //     $q->where('id', '=', $this->id_category );  //  'Mięso'
+    //     })->get();
+       
+        return $categories;
     }
 }

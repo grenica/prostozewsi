@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="cart_header">
         <!-- <a href="#">
             <i class="icofont-cart"></i>
             <span>{{cartCount}}</span>

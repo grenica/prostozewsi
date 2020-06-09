@@ -1,0 +1,247 @@
+ul {
+    margin:0;
+    padding: 0;
+}
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+// gradienty
+.gradient1 {
+    background: linear-gradient(60deg,#FBA4A0,#FC5587);
+}
+.gradient2 {
+    background: linear-gradient(60deg,#2f8371,#78cf78);
+}  
+.sidebar {
+    // background-color: #7bc066;
+    background: linear-gradient(to top, $teal, $green);
+    flex-basis: 12rem;
+}
+.app_page {
+    flex: 1 1 100%;
+    flex-direction: column;
+}
+.guzik {
+   // color:$colorguzik !important;
+}
+.store_header {
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
+}
+
+/* strona głowna*/
+#start {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    //background-color: #257c80;
+    // height: 100vh;
+    // background-image: url('../public/img/tlo1.webp');
+    // background-repeat: no-repeat;
+    // background-size: cover;
+}
+.header_start {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+
+}
+
+.info_start {
+    h3 {
+        font-weight: bold;
+        font-size: 35px;
+    }
+    h4 {
+        font-size: 30px;
+    }
+}
+.notification {
+    background-color: #2b522d;
+    color: white;
+    padding: 10px;
+}
+.cat {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    justify-content: space-evenly;
+}
+.article-list {
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: center;
+    padding: 2vw;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: auto 1fr;
+    grid-gap: 7px;
+    // h3 {
+    //     grid-column-start: 1;
+    //     grid-column-end: 4;
+    //     margin: 0;;
+    // }
+    .item_pos {
+        display: flex;
+        flex-direction: column;
+        .card_img {
+            width: 100%;   
+        }
+    }
+}
+.price-block {
+    display: flex;
+    justify-content: space-between;
+    
+}
+.price_info {
+    font-size: 1.3rem;
+    span {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+}
+.main_category_title {
+    display: flex;
+    justify-content: space-between;
+    grid-column-start: 1;
+    grid-column-end: -1;
+}
+// .item-pos {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     margin: 0 5px;
+// }
+// .item-pos:hover {
+//     border: 1px solid #000;
+// }
+// .add-card {
+//     text-decoration: none;
+//     background-color: #468d31;
+//     color: white;
+//     text-align: center;
+//     padding: 5px;
+//     width: 100%;
+// }
+.logo_wrapper {
+    display: flex;
+    justify-content: center;
+}
+.img_wrapper {
+   // display: flex;
+   
+}
+.store_link {
+    color:#519956;
+    font-weight: bold;
+    &:hover {
+        color:#566e57;
+        text-decoration: none;
+    }
+}
+.product_info {
+    // display: flex;
+    display: grid;
+    grid-template-columns: 160px 2fr 1fr;
+    // grid-gap: 20px;
+    .imageDefault {
+        width: 100%;
+    }
+    .product_preview {
+        position: relative;
+        img:first-of-type {
+            z-index: 100;
+        }
+        img {
+            width: 100%;
+            position: absolute;
+            top:0;
+            left: 0;
+        }
+    }
+    .product_images {
+    //     display: flex;
+    //     border: 1px solid black;
+         img {
+            width: 100%;
+        }
+    }
+    .product_title {
+        display: flex;
+        flex-direction: column;
+        padding: 0 1vw;
+        .product_title_head {
+            font-size: 2.2vw;
+        }
+    }
+}
+// .imageDefault {
+//     width: 100%;
+// }
+
+
+// .cart {
+//     ul {
+//         padding: 0;
+//         margin: 0 60px;
+//         li {
+//             display: grid;
+//             grid-template-columns: 1fr 1fr 100px 1fr;
+//         }
+//         a {
+//             margin: auto 0;
+//         }
+//     }
+// }
+.active {
+    z-index: 150;
+}
+.order {
+    padding: 10px;
+    border-radius: 3px;
+    border:1px solid #2a4721;
+    &:hover {
+        background-color: #82aa76;
+    }
+}
+.strong {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.removeItemCard {
+    &:hover {
+        cursor: pointer;
+    }
+}
+.lista {
+    a {
+        color: #faf4f4;
+        font-weight: bold;
+        padding: 4%;
+        display: flex;
+        align-items: center;
+        transition: background-color .3s ease-in;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.192);
+            color: #425742;
+            text-decoration: none;
+            
+        }
+        i {
+            margin-right: 10px;
+        }
+    }
+
+}
+footer {
+    background-color: #82aa76;
+    color: white;
+}
+
+// front (VUE)
+
+// end fron (VUE)

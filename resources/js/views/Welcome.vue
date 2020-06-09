@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>Strona startowa</h1>
+    <div class="main_product_wrapper">
+        <!-- <h1>Strona startowa</h1> -->
         <!-- <router-link to="/about">O nas</router-link> -->
         <NewsMain />
         

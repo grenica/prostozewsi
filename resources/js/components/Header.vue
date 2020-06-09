@@ -1,10 +1,11 @@
 <template>
     <div class="store_header">
         <div class="notification">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cookie = {{ marketObj.name }}
+            Wybramy rynek =. Cookie = {{ marketObj.name }}
         </div>
         <Logo />
        <Categories />
+        
         <!-- <a href="#" class="btn btn-primary" @click="testuj()">CLICK</a> -->
     </div>
    
@@ -15,6 +16,7 @@ import Vue from 'vue';
 import Categories from './Categories.vue';
 import Logo from '../components/Logo.vue';
 
+
 import Cookies from "js-cookie";
 // import VueCookies from 'vue-cookies';
 // Vue.use(VueCookies);
@@ -23,7 +25,8 @@ import Cookies from "js-cookie";
 export default {
    components: {
     Logo,
-    Categories,       
+    Categories,
+        
    },
 //    mounted: function() {
 //        console.log('mouted');
